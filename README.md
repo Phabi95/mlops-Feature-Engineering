@@ -97,6 +97,14 @@ Client (Postman)
 ```
 
 ---
+## Clone the Repository
+  First, clone the repository to your local machine:
+
+```bash
+git clone https://github.com/Phabi95/mlops-Feature-Engineering.git
+cd mlops-Feature-Engineering
+```
+
 
 ## Setup & Run
 
