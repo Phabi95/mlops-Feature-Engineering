@@ -1,0 +1,83 @@
+version: "3.8"
+
+services:
+  # Core Feature Engineering API
+  api:
+    build: .
+    container_name: optasia_api
+    # Production-ready command with high-performance event loop and parser 
+    command: >
+      uvicorn app.main:app 
+      --host 0.0.0.0 
+      --port 8000 
+      --workers 4
+      --loop uvloop 
+      --http httptools 
+      --no-access-log
+    volumes:
+      - ./logs:/app/logs        # Persistence for structured application logs
+      - ./data:/data            # Bind mount for direct SQLite database access
+    expose:
+      - "8000"
+    environment:
+      - DB_PATH=/data/optasia_mlops.db
+      - PROMETHEUS_MULTIPROC_DIR=/tmp/prometheus_multiproc
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  # Reverse Proxy & Load Balancer
+  nginx:
+    image: nginx:latest
+    container_name: optasia_nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: always
+    networks:
+      - backend
+
+  # Metrics Scraper & Time-Series DB
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: optasia_prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    restart: always
+    networks:
+      - backend
+
+  # Visualization Dashboard
+  grafana:
+    image: grafana/grafana:latest
+    container_name: optasia_grafana
+    user: "0" # Required for persistent volume permissions
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: always
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:

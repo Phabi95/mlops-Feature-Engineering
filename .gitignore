@@ -1,0 +1,27 @@
+# --- Python & Environment ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.env
+
+# --- Database (SQLite) ---
+# We do not commit data persistence files to source control
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# --- Logs ---
+# Logs are generated at runtime and stored in mapped volumes
+logs/*.log
+logs/
+
+# --- Monitoring & Temporary ---
+# Prometheus multiproc temporary storage
+/tmp/prometheus_multiproc/*
+
+# --- OS & IDE Specific ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
