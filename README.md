@@ -273,10 +273,10 @@ Tests were conducted using Postman Performance tab with **`customer_dataset_01.j
 Metrics are exposed at `/metrics` and visualised in Grafana (`http://localhost:3000`).
 
 ### Grafana Dashboard — 10k Test
-![Grafana 10k](reports\monitoring\dashboard_metrics_10k.png)
+![Grafana 10k](reports/monitoring/dashboard_metrics_10k.png)
 
 ### Grafana Dashboard — 100k Test
-![Grafana 100k](reports\monitoring\dashboard_metrics_100k.png)
+![Grafana 100k](reports/monitoring/dashboard_metrics_100k.png)
 
 ### Tracked Metrics
 
@@ -315,7 +315,7 @@ Metrics are exposed at `/metrics` and visualised in Grafana (`http://localhost:3
 | 09 | customer_dataset_09 | yhpFOMeH | 54 | 32 | 22 | ❌ FAIL |
 | 10 | customer_dataset_10 | 3x0dGYketTGziX2H4K | 57 | 40 | 17 | ❌ FAIL |
 
-Full validation report: [`reports/validation_summary.html`](reports\validation\validation_summary.png)
+Full validation report: [`reports/validation_summary.html`](reports/validation/validation_summary.png)
 
 ---
 
