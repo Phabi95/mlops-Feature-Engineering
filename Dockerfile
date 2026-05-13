@@ -45,10 +45,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 USER mluser
 EXPOSE 8000
 
-# High-concurrency production server (uvloop/httptools) [cite: 5]
+# High-concurrency production server (uvloop/httptools)
 CMD ["uvicorn", "app.main:app", \
      "--host", "0.0.0.0", \
      "--port", "8000", \
      "--loop", "uvloop", \
      "--http", "httptools", \
+     "--proxy-headers", \
+     "--forwarded-allow-ips", "*", \
      "--no-access-log"]
