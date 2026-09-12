@@ -5,7 +5,4 @@ aiosqlite
 gunicorn
 prometheus-fastapi-instrumentator
 orjson==3.10.3
-uvloop==0.19.0
-httptools==0.6.1
 psutil
-gunicorn

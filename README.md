@@ -50,10 +50,10 @@ Client (Postman)
 | API Framework | FastAPI + Uvicorn |
 | Validation | Pydantic v2 |
 | Database | SQLite via aiosqlite (WAL mode) |
-| Serialisation | ORJSONResponse |
+| Serialization | ORJSONResponse |
 | Monitoring | Prometheus + Grafana |
 | Load Balancing | Nginx |
-| Containerisation | Docker + Docker Compose |
+| Containerization| Docker + Docker Compose |
 | Performance Testing | Postman Performance |
 
 ---
@@ -107,13 +107,6 @@ cd mlops-Feature-Engineering
 
 
 ## Setup & Run
-
-### Prerequisites
-
-- Docker Desktop ≥ 24
-- Docker Compose ≥ 2
-
-### Start all services
 
 ```bash
 docker-compose up --build -d
@@ -323,7 +316,7 @@ Metrics are exposed at `/metrics` and visualised in Grafana (`http://localhost:3
 | 09 | customer_dataset_09 | yhpFOMeH | 54 | 32 | 22 | ❌ FAIL |
 | 10 | customer_dataset_10 | 3x0dGYketTGziX2H4K | 57 | 40 | 17 | ❌ FAIL |
 
-Full validation report: [`reports/validation_summary.html`](reports/validation/validation_summary.png)
+Full validation report: [reports/validation/validation_summary.png](reports/validation/validation_summary.png)
 
 ---
 

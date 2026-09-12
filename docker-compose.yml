@@ -1,10 +1,7 @@
-
 services:
-  # Core Feature Engineering API
   api:
     build: .
     container_name: optasia_api
-    # Production-ready command with high-performance event loop and parser 
     command: >
       gunicorn app.main:app
       --workers 1
@@ -13,8 +10,8 @@ services:
       --access-logfile -
       --error-logfile -
     volumes:
-      - ./logs:/app/logs        # Persistence for structured application logs
-      - ./data:/data            # Bind mount for direct SQLite database access
+      - ./logs:/app/logs:z
+      - ./data:/data:z
     expose:
       - "8000"
     environment:
@@ -28,14 +25,13 @@ services:
     networks:
       - backend
 
-  # Reverse Proxy & Load Balancer
   nginx:
     image: nginx:latest
     container_name: optasia_nginx
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro,z
     ports:
-      - "80:80"
+      - "8000:80"
     depends_on:
       api:
         condition: service_healthy
@@ -43,12 +39,11 @@ services:
     networks:
       - backend
 
-  # Metrics Scraper & Time-Series DB
   prometheus:
     image: prom/prometheus:latest
     container_name: optasia_prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro,z
       - prometheus_data:/prometheus
     ports:
       - "9090:9090"
@@ -56,11 +51,10 @@ services:
     networks:
       - backend
 
-  # Visualization Dashboard
   grafana:
     image: grafana/grafana:latest
     container_name: optasia_grafana
-    user: "0" # Required for persistent volume permissions
+    user: "0"
     ports:
       - "3000:3000"
     volumes:
@@ -76,5 +70,5 @@ networks:
     driver: bridge
 
 volumes:
-  prometheus_data:
-  grafana_data:
+  prometheus_data: {}
+  grafana_data: {}

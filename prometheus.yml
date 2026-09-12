@@ -1,7 +1,7 @@
 global:
-  [cite_start]scrape_interval: 5s # High-resolution polling for real-time monitoring 
+  scrape_interval: 5s
 
 scrape_configs:
-  - job_name: 'optasia_api'
+  - job_name: "optasia_api"
     static_configs:
-      - [cite_start]targets: ['optasia_api:8000'] # Internal container endpoint for metric scraping
+      - targets: ["api:8000"]
